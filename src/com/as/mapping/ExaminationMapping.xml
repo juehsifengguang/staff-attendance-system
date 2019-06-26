@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- sql语句  -->
+<!-- 有可能多个mapper中有相同id 所以使用namespace区分必填参数 -->
+<mapper namespace="com.as.mapping.ExaminationDao">
+    <!-- 根据id获取User 
+        id用来标识这个sql语句
+        parameterType 指定输入参数的类型
+        resultType 输出结果的类型
+    -->
+    <select id="findExaminationById" parameterType="Integer" resultType="com.as.entity.Examination">
+        <!-- 原生sql语句 
+            #{}代表占位符 等同于?
+            括号中的内容可以随便写，但不能不写
+        -->
+        select * from examination where e_id=#{e_id}
+    </select>
+    
+    <select id="selectAllExamination"  parameterType="Integer"  resultType="com.as.entity.Examination">
+       select * from examination
+    </select>
+
+
+    <!-- 添加新数据
+     insert中不需要声明返回类型 因为只有Integer
+        仅支持一个参数 参数比较复杂就直接传对象 或者map
+        获取属性 或者map 通过#{属性名} 或 #{key名} 
+    -->
+    <!-- 添加新数据并获得id  放到对象中 -->
+    <insert id="insertExamination" parameterType="Map">
+        insert into examination(e_comment,is_overTime,record_id) values(#{e_comment},#{is_overTime},#{record_id})
+    </insert>
+    <!-- 删除某些记录 -->
+    <delete id="deleteExaminationById" parameterType="Integer">
+        delete from examination where e_id=#{e_id}
+    </delete>
+    
+</mapper>

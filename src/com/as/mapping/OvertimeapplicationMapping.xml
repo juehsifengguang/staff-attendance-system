@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- sql语句  -->
+<mapper namespace="com.as.mapping.OvertimeapplicationDao">
+    <select id="findOvertimeApplyByOaid" parameterType="Integer" resultType="com.as.entity.Overtimeapplication">
+        select * from overtimeapplication where oa_id=#{oa_id}
+    </select>
+
+
+	<insert id="insertOvertimeApply" parameterType="Map">
+		insert into overtimeapplication(s_id,overtime_start,overtime_end,overtime_reason,is_approved) values(#{s_id},#{overtime_start},#{overtime_end},#{overtime_reason},#{is_approved})
+	</insert>
+	
+
+	<update id="updateOvertimeApplyByOaid" parameterType="Map">
+   		update overtimeapplication
+   		<trim prefix="set" suffixOverrides=",">
+   			<!-- <if test="_parameter.containsKey('t_overtime_start')"> -->
+   			<if test="overtime_start != null">
+   				overtime_start=#{overtime_start},
+   			</if>
+   			<if test="overtime_end != null">
+   				overtime_end=#{overtime_end},
+   			</if>
+   			<if test="overtime_reason != null">
+   				overtime_reason=#{overtime_reason},
+   			</if>
+   			<if test="is_approved != null">
+   				is_approved=#{is_approved}
+   			</if>
+   		</trim>
+   		where oa_id=#{oa_id}
+   	</update>
+   	
+   	
+   	<select id="selectAllOvertimeApplyBySid" parameterType="Integer" resultType="com.as.entity.Overtimeapplication">
+        select * from overtimeapplication where s_id=#{s_id}
+    </select>
+    
+    
+    <delete id="deleteOvertimeApplyByOaid" parameterType="Integer">
+    	delete from overtimeapplication where oa_id=#{oa_id}
+    </delete>
+
+</mapper>
